@@ -5,7 +5,7 @@ handful of airports. The service provides two distinct interfaces. One is a quer
 systems to retrieve information such mean temperature and max wind speed. The other is a collector interface used by
 airports to update meteorological data stored in AWS. You'll find more detail about these interfaces in
 WeatherCollectorEndpoint.java and WeatherQueryEndpoint.java. To see the service in action, you can run the
-included run-ws.sh which launches the server and demonstrates a simple client hitting the REST endpoint.
+included WeatherClient application which demonstrates a simple client hitting the REST endpoint.
 
 Over time, the number of airports and clients of the service has grown. Today, the application finds itself filling a
 role much larger than it was initially designed for - resulting in poor reliability and slow performance. Your task is
