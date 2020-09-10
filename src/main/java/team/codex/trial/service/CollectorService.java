@@ -11,5 +11,5 @@ public interface CollectorService {
 
   AirportData addAirport(String iata, int latitude, int longitude);
 
-  void deleteAirport(String iata);
+  boolean deleteAirport(String iata);
 }

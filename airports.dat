@@ -1,0 +1,6 @@
+City,Country,IATA/FAA,ICAO,Latitude,Longitude,Altitude,Timezone,DST
+,,"BOS",,42,-71,0,0,U
+,,"EWR",,40,-74,0,0,U
+,,"JFK",,40,-73,0,0,U
+,,"LGA",,40,-75,0,0,U
+,,"MMU",,40,-76,0,0,U

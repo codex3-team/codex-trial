@@ -79,7 +79,6 @@ public class RestWeatherCollectorController {
 
   @DeleteMapping("/airport/{iata}")
   public Response deleteAirport(@PathVariable String iata) {
-    collectorService.deleteAirport(iata);
-    return Response.ok().build();
+    return Response.ok(collectorService.deleteAirport(iata)).build();
   }
 }

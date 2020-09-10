@@ -46,7 +46,7 @@ public class CollectorServiceImpl implements CollectorService {
   }
 
   @Override
-  public void deleteAirport(String iata) {
-    DataContainer.deleteAirport(iata);
+  public boolean deleteAirport(String iata) {
+    return DataContainer.deleteAirport(iata);
   }
 }

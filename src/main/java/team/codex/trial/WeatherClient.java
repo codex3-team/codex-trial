@@ -45,11 +45,11 @@ public class WeatherClient {
     WeatherClient wc = new WeatherClient();
     wc.pingCollect();
 
-    wc.addAirport("BOS", 42, -71);
-    wc.addAirport("EWR", 40, -74);
-    wc.addAirport("JFK", 40, -73);
-    wc.addAirport("LGA", 40, -75);
-    wc.addAirport("MMU", 40, -76);
+//    wc.addAirport("BOS", 42, -71);
+//    wc.addAirport("EWR", 40, -74);
+//    wc.addAirport("JFK", 40, -73);
+//    wc.addAirport("LGA", 40, -75);
+//    wc.addAirport("MMU", 40, -76);
 
     wc.populate("WIND", 0, 10, 6, 4, 20);
 
