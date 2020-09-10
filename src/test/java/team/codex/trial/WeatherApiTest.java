@@ -32,9 +32,7 @@ public class WeatherApiTest {
 
   @Test
   public void weatherApiTests() throws Exception {
-    mvc.perform(get("/collect/ping"))
-        .andDo(print())
-        .andExpect(status().isOk());
+    mvc.perform(get("/collect/ping")).andDo(print()).andExpect(status().isOk());
 
     addAirport("BOS", 42, -71).andDo(print()).andExpect(status().isOk());
     addAirport("EWR", 40, -74).andDo(print()).andExpect(status().isOk());
@@ -51,7 +49,7 @@ public class WeatherApiTest {
     query("LGA").andDo(print()).andExpect(status().isOk());
     query("MMU").andDo(print()).andExpect(status().isOk());
 
-    pingQuery().andDo(print()).andExpect(status().isOk());
+    mvc.perform(get("/query/ping")).andDo(print()).andExpect(status().isOk());
   }
 
   private ResultActions addAirport(String iata, int lat, int lng) throws Exception {
@@ -68,9 +66,5 @@ public class WeatherApiTest {
 
   public ResultActions query(String iata) throws Exception {
     return mvc.perform(get("/query/weather/" + iata + "/0"));
-  }
-
-  public ResultActions pingQuery() throws Exception {
-    return mvc.perform(get("/query/ping"));
   }
 }
