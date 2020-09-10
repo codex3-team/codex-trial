@@ -44,11 +44,18 @@ public class WeatherClient {
   public static void main(String[] args) {
     WeatherClient wc = new WeatherClient();
     wc.pingCollect();
+
+    wc.addAirport("BOS", 42, -71);
+    wc.addAirport("EWR", 40, -74);
+    wc.addAirport("JFK", 40, -73);
+    wc.addAirport("LGA", 40, -75);
+    wc.addAirport("MMU", 40, -76);
+
     wc.populate("WIND", 0, 10, 6, 4, 20);
 
     wc.query("BOS");
-    wc.query("JFK");
     wc.query("EWR");
+    wc.query("JFK");
     wc.query("LGA");
     wc.query("MMU");
 
@@ -81,6 +88,11 @@ public class WeatherClient {
     DataPoint dp = new DataPoint(first, last, mean, median, count,
         DataPointType.valueOf(pointType));
     path.request().post(Entity.entity(dp, "application/json"));
+  }
+
+  public void addAirport(String iata, int lat, int lng) {
+    Response response = collect.path("/airport/" + iata + "/" + lat + "/" + lng).request().post(null);
+    System.out.println("addAirport: " + response.readEntity(String.class));
   }
 
   public void exit() {

@@ -39,7 +39,7 @@ public class RestWeatherQueryController {
    * Given a query in json format {'iata': CODE, 'radius': km} extracts the requested airport
    * information and return a list of matching atmosphere information.
    *
-   * @param iata         the iataCode
+   * @param iata         the iata
    * @param radius the radius in km
    * @return a list of atmospheric information
    */

@@ -2,6 +2,7 @@ package team.codex.trial.rest;
 
 import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,7 +55,7 @@ public class RestWeatherCollectorController {
 
   @GetMapping("/airports")
   public Response getAirports() {
-    return Response.ok(collectorService.getAirports()).build();
+    return Response.ok(queryService.getAirports()).build();
   }
 
   @GetMapping("/airport/{iata}")
@@ -66,5 +67,19 @@ public class RestWeatherCollectorController {
     }
 
     return Response.ok(airportData).build();
+  }
+
+  @PostMapping("/airport/{iata}/{lat}/{long}")
+  public Response addAirport(
+      @PathVariable String iata,
+      @PathVariable int lat,
+      @PathVariable(name = "long") int lng) {
+    return Response.ok(collectorService.addAirport(iata, lat, lng)).build();
+  }
+
+  @DeleteMapping("/airport/{iata}")
+  public Response deleteAirport(@PathVariable String iata) {
+    collectorService.deleteAirport(iata);
+    return Response.ok().build();
   }
 }

@@ -11,5 +11,5 @@ public enum DataPointType {
   HUMIDITY,
   PRESSURE,
   CLOUDCOVER,
-  PRECIPITATION;
+  PRECIPITATION
 }

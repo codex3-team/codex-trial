@@ -1,7 +1,5 @@
 package team.codex.trial.service;
 
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.codex.trial.data.DataContainer;
@@ -19,23 +17,36 @@ public class CollectorServiceImpl implements CollectorService {
   /**
    * Update the airports weather data with the collected data.
    *
-   * @param iataCode  the 3 letter IATA code
+   * @param iata      the 3 letter IATA code
    * @param pointType the point type {@link DataPointType}
    * @param dp        a datapoint object holding pointType data
    * @throws WeatherException if the update can not be completed
    */
   @Override
-  public void addDataPoint(String iataCode, DataPointType pointType, DataPoint dp)
+  public void addDataPoint(String iata, DataPointType pointType, DataPoint dp)
       throws WeatherException {
-    AirportData airportData = queryService.findAirportData(iataCode);
+    AirportData airportData = queryService.findAirportData(iata);
 
-    if (airportData != null) {
-      airportData.atmosphericInformation.updateContents(pointType, dp);
+    if (airportData == null) {
+      throw new WeatherException("airport not found");
     }
+
+    airportData.getAtmosphericInformation().updateContents(pointType, dp);
   }
 
   @Override
-  public Set<String> getAirports() {
-    return DataContainer.getAirportData().stream().map(a -> a.iata).collect(Collectors.toSet());
+  public AirportData addAirport(String iata, int latitude, int longitude) {
+    AirportData data = queryService.findAirportData(iata);
+
+    if (data == null) {
+      data = DataContainer.addAirport(iata, latitude, longitude);
+    }
+
+    return data;
+  }
+
+  @Override
+  public void deleteAirport(String iata) {
+    DataContainer.deleteAirport(iata);
   }
 }

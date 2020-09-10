@@ -13,8 +13,7 @@ public class ExternalAirportData {
   private DST dst;
 
   public ExternalAirportData(String city, String country, String iata, String icao, double latitude,
-      double longitude,
-      int altitude, double tzOffset, DST dst) {
+      double longitude, int altitude, double tzOffset, DST dst) {
     this.city = city;
     this.country = country;
     this.iata = iata;

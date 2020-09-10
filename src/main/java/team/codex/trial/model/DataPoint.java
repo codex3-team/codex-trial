@@ -7,23 +7,17 @@ package team.codex.trial.model;
  */
 public class DataPoint {
 
-  private final double mean;
-  private final double first;
-  private final double median;
-  private final double last;
-  private final int count;
-  private final DataPointType type;
+  private double mean = 0;
+  private double first = 0;
+  private double median = 0;
+  private double last = 0;
+  private int count = 0;
+  private DataPointType type = null;
 
   /**
    * private constructor, use the builder to create this object
    */
   private DataPoint() {
-    type = null;
-    count = 0;
-    last = 0.0;
-    median = 0.0;
-    first = 0.0;
-    mean = 0.0;
   }
 
   public DataPoint(double mean, double first, double median, double last, int count,
@@ -77,5 +71,4 @@ public class DataPoint {
   public DataPointType getType() {
     return type;
   }
-
 }
