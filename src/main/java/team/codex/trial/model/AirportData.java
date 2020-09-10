@@ -7,21 +7,28 @@ package team.codex.trial.model;
  */
 public class AirportData {
 
-    /** the three letter IATA code */
-    public String iata;
+  /**
+   * the three letter IATA code
+   */
+  public String iata;
 
-    /** latitude value in degrees */
-    public int latitude;
+  /**
+   * latitude value in degrees
+   */
+  public int latitude;
 
-    /** longitude value in degrees */
-    public int longitude;
+  /**
+   * longitude value in degrees
+   */
+  public int longitude;
 
-    public AtmosphericInformation atmosphericInformation;
+  public AtmosphericInformation atmosphericInformation;
 
-    public AirportData(String iata, int latitude, int longitude, AtmosphericInformation atmosphericInformation) {
-        this.iata = iata;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.atmosphericInformation = atmosphericInformation;
-    }
+  public AirportData(String iata, int latitude, int longitude,
+      AtmosphericInformation atmosphericInformation) {
+    this.iata = iata;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.atmosphericInformation = atmosphericInformation;
+  }
 }

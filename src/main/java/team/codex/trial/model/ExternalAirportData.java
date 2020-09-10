@@ -1,64 +1,64 @@
 package team.codex.trial.model;
 
-import java.util.Objects;
-
 public class ExternalAirportData {
-    private String city;
-    private String country;
-    private String iata;
-    private String icao;
-    private double latitude;
-    private double longitude;
-    private int altitude;
-    private double tzOffset;
-    private DST dst;
 
-    public ExternalAirportData(String city, String country, String iata, String icao, double latitude, double longitude,
-                               int altitude, double tzOffset, DST dst) {
-        this.city = city;
-        this.country = country;
-        this.iata = iata;
-        this.icao = icao;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.tzOffset = tzOffset;
-        this.dst = dst;
-    }
+  private String city;
+  private String country;
+  private String iata;
+  private String icao;
+  private double latitude;
+  private double longitude;
+  private int altitude;
+  private double tzOffset;
+  private DST dst;
 
-    public String getCity() {
-        return city;
-    }
+  public ExternalAirportData(String city, String country, String iata, String icao, double latitude,
+      double longitude,
+      int altitude, double tzOffset, DST dst) {
+    this.city = city;
+    this.country = country;
+    this.iata = iata;
+    this.icao = icao;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.altitude = altitude;
+    this.tzOffset = tzOffset;
+    this.dst = dst;
+  }
 
-    public String getCountry() {
-        return country;
-    }
+  public String getCity() {
+    return city;
+  }
 
-    public String getIata() {
-        return iata;
-    }
+  public String getCountry() {
+    return country;
+  }
 
-    public String getIcao() {
-        return icao;
-    }
+  public String getIata() {
+    return iata;
+  }
 
-    public double getLatitude() {
-        return latitude;
-    }
+  public String getIcao() {
+    return icao;
+  }
 
-    public double getLongitude() {
-        return longitude;
-    }
+  public double getLatitude() {
+    return latitude;
+  }
 
-    public int getAltitude() {
-        return altitude;
-    }
+  public double getLongitude() {
+    return longitude;
+  }
 
-    public double getTzOffset() {
-        return tzOffset;
-    }
+  public int getAltitude() {
+    return altitude;
+  }
 
-    public DST getDst() {
-        return dst;
-    }
+  public double getTzOffset() {
+    return tzOffset;
+  }
+
+  public DST getDst() {
+    return dst;
+  }
 }
