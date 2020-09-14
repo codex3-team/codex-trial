@@ -1,7 +1,5 @@
 package team.codex.trial.model;
 
-import java.util.Objects;
-
 public class ExternalAirportData {
     private String city;
     private String country;

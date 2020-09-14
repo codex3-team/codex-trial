@@ -1,7 +1,8 @@
 package team.codex.trial.model;
 
-import team.codex.trial.exception.WeatherException;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,24 +10,33 @@ import java.util.Map;
 /**
  * encapsulates sensor information for a particular location
  */
-public class AtmosphericInformation {
+public class AtmosphericInformation implements Serializable {
 
-    Map<DataPointType, DataPoint> Contents = new HashMap<>();
+    private Map<DataPointType, DataPoint> content = new HashMap<>();
 
-    /** the last time this data was updated, in milliseconds since UTC epoch */
+    // Last time this data was updated, in milliseconds since UTC epoch
     private long lastUpdateTime;
 
-    public AtmosphericInformation() {
-
-    }
-
-    public void updateContents(DataPointType pointType, DataPoint dataPoint) throws WeatherException {
+    public void updateContent(DataPointType pointType, DataPoint dataPoint) {
         lastUpdateTime = System.currentTimeMillis();
-        Contents.put(pointType, dataPoint);
+        content.put(pointType, dataPoint);
     }
 
-    public boolean isFresh(){
+    public boolean isFresh() {
+        // What is expected to do here?
+        // Condition below is always true. Usually such checks are preformed with certain threshold like
+        // Instant.now().getEpochSecond() - lastUpdateTime <= SOME_THRESHOLD
+        // Changing logic here may result in providing unexpected data to client.
+        // Such changes can be considered as contract change and it needs to be discussed within a team.
         return lastUpdateTime < Instant.now().getEpochSecond();
     }
 
+    @JsonProperty("Contents")
+    public Map<DataPointType, DataPoint> getContent() {
+        return content;
+    }
+
+    public long getLastUpdateTime() {
+        return lastUpdateTime;
+    }
 }

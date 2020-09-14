@@ -1,19 +1,31 @@
 package team.codex.trial.data;
 
+import org.apache.commons.lang3.SerializationUtils;
+import org.springframework.stereotype.Component;
 import team.codex.trial.model.AirportData;
 import team.codex.trial.model.AtmosphericInformation;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * There are several ways to deal with storage like this.
+ * What will be shown here is a simplest way to fix concurrency issues.
+ * <p>
+ * Alternative solution could be major interface change to provide following capabilities:
+ * 1) implement thread-safe repository-like CRUD operations
+ * 2) get-methods should return copy of internally stored object to avoid unexpected modifications
+ * 3) copying large airport storage probably isn't a good idea so we need to provide
+ * capabilities to iterate over internal storage with specified predicate.
+ * <p>
+ * In general such changes would lead to storage abstraction which could be easily replaced by database in future.
+ */
+@Component
 public class DataContainer {
-    /** all known airports */
-    private final static List<AirportData> airportData = Collections.synchronizedList(new ArrayList<>());
+    /**
+     * all known airports
+     */
+    private final Map<String, AirportData> airportDataMap = new ConcurrentHashMap<>();
 
     /**
      * Internal performance counter to better understand most requested information, this map can be improved but
@@ -21,52 +33,60 @@ public class DataContainer {
      * we don't want to write this to disk, but will pull it off using a REST request and aggregate with other
      * performance metrics
      */
-    private final static Map<AirportData, Integer> requestFrequency = new TreeMap<>();
+    private final Map<String, Integer> requestFrequencyMap = new ConcurrentHashMap<>();
 
-    private final static Map<Double, Integer> radiusFreq = new HashMap<>();
+    private final Map<Double, Integer> radiusFrequencyMap = new ConcurrentHashMap<>();
 
-    static {
+    public DataContainer() {
         init();
     }
 
-    /**
-     * A dummy init method that loads hard coded data
-     */
-    protected static void init() {
-        airportData.clear();
-        requestFrequency.clear();
+    public void reset() {
+        init();
+    }
+
+    public void addAirport(String iata, int latitude, int longitude) {
+        airportDataMap.put(iata, new AirportData(iata, latitude, longitude, new AtmosphericInformation()));
+    }
+
+    public Optional<AirportData> findAirportData(String iata) {
+        var result = airportDataMap.get(iata);
+        if (result == null) {
+            return Optional.empty();
+        }
+        return Optional.of(SerializationUtils.clone(result));
+    }
+
+    public void updateAirportData(AirportData airportData) {
+        airportDataMap.put(airportData.getIata(), airportData);
+    }
+
+    public void updateRequestFrequency(AirportData airportData, Double radius) {
+        requestFrequencyMap.compute(airportData.getIata(), (k, v) -> v == null ? 1 : v + 1);
+        radiusFrequencyMap.compute(radius, (k, v) -> v == null ? 1 : v + 1);
+    }
+
+    public List<AirportData> getAirportData() {
+        return new ArrayList<>(airportDataMap.values());
+    }
+
+    public Map<String, Integer> getRequestFrequencyMap() {
+        return Collections.unmodifiableMap(requestFrequencyMap);
+    }
+
+    public Map<Double, Integer> getRadiusFrequencyMap() {
+        return Collections.unmodifiableMap(radiusFrequencyMap);
+    }
+
+    private void init() {
+        airportDataMap.clear();
+        requestFrequencyMap.clear();
+        radiusFrequencyMap.clear();
 
         addAirport("BOS", 42, -71);
         addAirport("EWR", 40, -74);
         addAirport("JFK", 40, -73);
         addAirport("LGA", 40, -75);
         addAirport("MMU", 40, -76);
-    }
-
-    public static void reset(){
-        init();
-    }
-
-    public static AirportData addAirport(String iataCode, int latitude, int longitude) {
-        AirportData ad = new AirportData(iataCode, latitude, longitude, new AtmosphericInformation());
-        airportData.add(ad);
-        return ad;
-    }
-
-    public static void UpdateReqeustFreqeuncy(AirportData airportData, Double radius) {
-        requestFrequency.put(airportData, requestFrequency.getOrDefault(airportData, 0) + 1);
-        radiusFreq.put(radius, radiusFreq.getOrDefault(radius, 0));
-    }
-
-    public static List<AirportData> getAirportData() {
-        return Collections.unmodifiableList(airportData);
-    }
-
-    public static Map<AirportData, Integer> getRequestFrequency() {
-        return Collections.unmodifiableMap(requestFrequency);
-    }
-
-    public static Map<Double, Integer> getRadiusFreq() {
-        return Collections.unmodifiableMap(radiusFreq);
     }
 }
