@@ -81,9 +81,19 @@ public class DataContainer {
         return Collections.unmodifiableMap(radiusFrequencyMap);
     }
 
+    private void addAirport(String iata, int latitude, int longitude) {
+        airportDataMap.put(iata, new AirportData(iata, latitude, longitude));
+    }
+
     private void init() {
         airportDataMap.clear();
         requestFrequencyMap.clear();
         radiusFrequencyMap.clear();
+
+        addAirport("BOS", 42, -71);
+        addAirport("EWR", 40, -74);
+        addAirport("JFK", 40, -73);
+        addAirport("LGA", 40, -75);
+        addAirport("MMU", 40, -76);
     }
 }
