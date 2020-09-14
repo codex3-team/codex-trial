@@ -1,5 +1,6 @@
 package team.codex.trial.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team.codex.trial.model.AirportData;
@@ -8,7 +9,6 @@ import team.codex.trial.model.DataPointType;
 import team.codex.trial.service.CollectorService;
 import team.codex.trial.service.QueryService;
 
-import javax.inject.Inject;
 import java.util.Set;
 
 /**
@@ -21,10 +21,10 @@ import java.util.Set;
 @RequestMapping("/collect")
 public class RestWeatherCollectorController {
 
-    @Inject
+    @Autowired
     private CollectorService collectorService;
 
-    @Inject
+    @Autowired
     private QueryService queryService;
 
     @GetMapping("/ping")

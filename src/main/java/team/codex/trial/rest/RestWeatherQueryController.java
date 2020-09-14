@@ -1,5 +1,6 @@
 package team.codex.trial.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +10,6 @@ import team.codex.trial.model.AtmosphericInformation;
 import team.codex.trial.model.QueryPingResponse;
 import team.codex.trial.service.QueryService;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/query")
 public class RestWeatherQueryController {
 
-    @Inject
+    @Autowired
     private QueryService queryService;
 
     /**

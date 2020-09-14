@@ -1,14 +1,13 @@
 package team.codex.trial;
 
 import org.junit.Before;
+import org.springframework.beans.factory.annotation.Autowired;
 import team.codex.trial.data.DataContainer;
 import team.codex.trial.model.AirportData;
 
-import javax.inject.Inject;
-
 public class TestBase {
 
-    @Inject
+    @Autowired
     protected DataContainer dataContainer;
 
     protected final String iata = "BOS";

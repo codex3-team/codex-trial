@@ -1,5 +1,6 @@
 package team.codex.trial.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,14 +10,13 @@ import team.codex.trial.model.AtmosphericInformation;
 import team.codex.trial.model.QueryPingResponse;
 import team.codex.trial.util.DistanceUtil;
 
-import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class QueryService {
 
-    @Inject
+    @Autowired
     private DataContainer dataContainer;
 
     /**

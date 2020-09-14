@@ -1,5 +1,6 @@
 package team.codex.trial.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -8,17 +9,16 @@ import team.codex.trial.model.AirportData;
 import team.codex.trial.model.DataPoint;
 import team.codex.trial.model.DataPointType;
 
-import javax.inject.Inject;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class CollectorService {
 
-    @Inject
+    @Autowired
     private QueryService queryService;
 
-    @Inject
+    @Autowired
     private DataContainer dataContainer;
 
     /**
