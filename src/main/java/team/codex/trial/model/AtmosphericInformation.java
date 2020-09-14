@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * encapsulates sensor information for a particular location
@@ -38,5 +39,19 @@ public class AtmosphericInformation implements Serializable {
 
     public long getLastUpdateTime() {
         return lastUpdateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AtmosphericInformation that = (AtmosphericInformation) o;
+        return lastUpdateTime == that.lastUpdateTime &&
+                Objects.equals(content, that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content, lastUpdateTime);
     }
 }

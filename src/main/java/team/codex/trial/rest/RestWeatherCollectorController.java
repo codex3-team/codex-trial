@@ -51,6 +51,18 @@ public class RestWeatherCollectorController {
         return ResponseEntity.ok(airportData);
     }
 
+    // NOTE: it would be nice to refactor endpoints to resource oriented design
+    // but assignment forces to keep current API contract
+    @PostMapping("/airport/{iata}/{latitude}/{longitude}")
+    public void createAirport(@PathVariable String iata, @PathVariable int latitude, @PathVariable int longitude) {
+        collectorService.createAirport(new AirportData(iata, latitude, longitude));
+    }
+
+    @DeleteMapping("/airport/{iata}")
+    public void deleteAirport(@PathVariable String iata) {
+        collectorService.deleteAirport(iata);
+    }
+
     @GetMapping("/exit")
     public void exit() {
         System.exit(0);

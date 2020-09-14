@@ -1,13 +1,12 @@
 package team.codex.trial.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.server.ResponseStatusException;
 import team.codex.trial.Application;
-import team.codex.trial.data.DataContainer;
+import team.codex.trial.TestBase;
 import team.codex.trial.model.DataPoint;
 import team.codex.trial.model.DataPointType;
 
@@ -17,23 +16,13 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
-public class QueryServiceTest {
-
-    @Inject
-    private DataContainer dataContainer;
+public class QueryServiceTest extends TestBase {
 
     @Inject
     private QueryService queryService;
 
     @Inject
     private CollectorService collectorService;
-
-    private static final String iata = "BOS";
-
-    @Before
-    public void setup() {
-        dataContainer.reset();
-    }
 
     @Test
     public void findAirportData_whenIataUnknown() {

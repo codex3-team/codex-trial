@@ -1,6 +1,7 @@
 package team.codex.trial.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Basic airport information.
@@ -18,13 +19,12 @@ public class AirportData implements Serializable {
     // Longitude value in degrees
     private int longitude;
 
-    private AtmosphericInformation atmosphericInformation;
+    private AtmosphericInformation atmosphericInformation = new AtmosphericInformation();
 
-    public AirportData(String iata, int latitude, int longitude, AtmosphericInformation atmosphericInformation) {
+    public AirportData(String iata, int latitude, int longitude) {
         this.iata = iata;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.atmosphericInformation = atmosphericInformation;
     }
 
     public String getIata() {
@@ -41,5 +41,21 @@ public class AirportData implements Serializable {
 
     public AtmosphericInformation getAtmosphericInformation() {
         return atmosphericInformation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AirportData that = (AirportData) o;
+        return latitude == that.latitude &&
+                longitude == that.longitude &&
+                Objects.equals(iata, that.iata) &&
+                Objects.equals(atmosphericInformation, that.atmosphericInformation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(iata, latitude, longitude, atmosphericInformation);
     }
 }

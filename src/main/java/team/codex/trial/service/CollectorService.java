@@ -1,7 +1,10 @@
 package team.codex.trial.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import team.codex.trial.data.DataContainer;
+import team.codex.trial.model.AirportData;
 import team.codex.trial.model.DataPoint;
 import team.codex.trial.model.DataPointType;
 
@@ -33,5 +36,18 @@ public class CollectorService {
 
     public Set<String> getAirports() {
         return dataContainer.getAirportData().stream().map(a -> a.getIata()).collect(Collectors.toSet());
+    }
+
+    public void createAirport(AirportData airportData) {
+        if (dataContainer.findAirportData(airportData.getIata()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Airport already exists");
+        }
+        dataContainer.addAirport(airportData);
+    }
+
+    public void deleteAirport(String iata) {
+        if (!dataContainer.deleteAirport(iata)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Airport doesn't exists");
+        }
     }
 }

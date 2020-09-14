@@ -3,7 +3,6 @@ package team.codex.trial.data;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.stereotype.Component;
 import team.codex.trial.model.AirportData;
-import team.codex.trial.model.AtmosphericInformation;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,8 +44,12 @@ public class DataContainer {
         init();
     }
 
-    public void addAirport(String iata, int latitude, int longitude) {
-        airportDataMap.put(iata, new AirportData(iata, latitude, longitude, new AtmosphericInformation()));
+    public void addAirport(AirportData airportData) {
+        airportDataMap.put(airportData.getIata(), airportData);
+    }
+
+    public boolean deleteAirport(String iata) {
+        return airportDataMap.remove(iata) != null;
     }
 
     public Optional<AirportData> findAirportData(String iata) {
@@ -82,11 +85,5 @@ public class DataContainer {
         airportDataMap.clear();
         requestFrequencyMap.clear();
         radiusFrequencyMap.clear();
-
-        addAirport("BOS", 42, -71);
-        addAirport("EWR", 40, -74);
-        addAirport("JFK", 40, -73);
-        addAirport("LGA", 40, -75);
-        addAirport("MMU", 40, -76);
     }
 }
